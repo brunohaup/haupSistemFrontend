@@ -1,29 +1,23 @@
 <script setup>
-import api from '../services/api';
+import api from '../services/baseApi.js';
+import { ref, onMounted } from 'vue';
 
-export default {
-  data() {
-    return {
-      usuario: []
-    };
-  },
-  async mounted() {
-    const token = localStorage.getItem('token');
-    const response = await api.get('/usuarios', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    this.usuarios = response.data;
-  }
-};
+onMounted ( async () => {
+  const token = localStorage.getItem('token');
+  console.log("ss", token);
+  
+  const response = await api.get('/usuario/1', {
+    headers: {
+      Authorization: token
+    }
+  });
+  console.log("kkkk",response);
+})
+
 </script>
 
 <template>
   <div>
     <h1>Lista de Usuários</h1>
-    <ul>
-      <li v-for="user in usuarios" :key="user.id">{{ user.nome }}</li>
-    </ul>
   </div>
 </template>
