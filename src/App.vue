@@ -1,13 +1,14 @@
 <script setup>
 
+import { ref } from 'vue'
+
+const drawer = ref(true)
+const rail = ref(true)
+
 </script>
 
 <template>
-  <div>
-    <v-app>
-      <router-view />
-    </v-app>
-  </div>
+  <router-view />
 </template>
 
 <style scoped>

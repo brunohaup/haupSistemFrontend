@@ -19,16 +19,6 @@ const passwordRules = [
   v => v.length >= 6 || 'A senha deve ter pelo menos 6 caracteres'
 ];
 
-    
-    /*const response = await api.post('/login', {
-        username: username.value,
-        password: password.value
-    });
-
-    console.log('Token:', response.data.token);
-    
-    */
-
 async function login() {
   loading.value = true
   const valid = await loginFormRef.value.validate();
@@ -39,7 +29,7 @@ async function login() {
     });
     if(response.status === 200){
       localStorage.setItem('token', response.headers.authorization);
-      router.push('/usuarios'); // redireciona para a listagem
+      router.push('/home');
     }
     
     loading.value = false;
