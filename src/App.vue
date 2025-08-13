@@ -1,10 +1,4 @@
 <script setup>
-
-import { ref } from 'vue'
-
-const drawer = ref(true)
-const rail = ref(true)
-
 </script>
 
 <template>
@@ -12,5 +6,4 @@ const rail = ref(true)
 </template>
 
 <style scoped>
-
 </style>

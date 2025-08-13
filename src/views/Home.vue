@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 const arrayTarefas = ref([
+  {titulo: 'Modulo de usuários', texto: 'Implementar sistema de permissões'},
   {titulo: 'Modulo de compras', texto: 'Implementar tudo do zero'},
 ]);
 
@@ -10,7 +11,7 @@ const arrayTarefas = ref([
 
 <template>
   <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 10px;">
-    <v-card v-for="tarefa in arrayTarefas" max-width="344" hover>
+    <v-card v-for="tarefa in arrayTarefas" max-width="344" hover style="margin: 10px;">
       <v-card-item>
         <v-card-title>
           {{ tarefa.titulo }}

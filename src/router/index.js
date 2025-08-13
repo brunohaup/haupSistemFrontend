@@ -4,6 +4,7 @@ import DefaultLayout from '../layouts/DefaultLayout.vue'
 import ComprasList from '../views/compras/ComprasList.vue';
 import ComprasForm from '../views/compras/ComprasForm.vue';
 import Home from '../views/Home.vue';
+import UsuariosList from '../views/usuarios/UsuariosList.vue';
 
 const routes = [
   {
@@ -16,9 +17,9 @@ const routes = [
     component: DefaultLayout,
     children: [
       { path: 'home', name: 'Home', component: Home },
-      //{ path: 'usuarios', name: 'Usuarios', components: Usuario },
-      { path: '/compras', name: 'Compras', component: ComprasList },
-      { path: '/compras/nova', name: 'NovaCompra', component: ComprasForm }
+      { path: 'usuarios', name: 'Usuarios', component: UsuariosList },
+      { path: 'compras', name: 'Compras', component: ComprasList },
+      { path: 'compras/nova', name: 'NovaCompra', component: ComprasForm }
     ]
   }
 ]
