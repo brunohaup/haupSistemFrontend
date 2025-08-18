@@ -28,7 +28,6 @@ const passwordRules = [
 ];
 
 function novo() {
-  console.log('Iniciar dialog inclusao passando id null');
   dialogEdicao.value = true;
   usuarioNovo.value = true;
   usuarioEmEdicao.value = {};
@@ -120,7 +119,15 @@ onMounted(async () => {
             <v-text-field v-model="usuarioEmEdicao.email" label="Email" variant="outlined" :clearable="!desabilitarEdicao" :readonly="desabilitarEdicao" :rules="emailRules"></v-text-field>
             <v-text-field v-model="usuarioEmEdicao.identificador" label="CPF/CNPJ" variant="outlined" :clearable="!desabilitarEdicao" :readonly="desabilitarEdicao" :rules="identificadorRules"></v-text-field>
             <v-divider style="margin: 10px;"></v-divider>
-            <v-text-field v-model="usuarioEmEdicao.userName" label="Nome de usuario" variant="outlined" :clearable="!desabilitarEdicao" :readonly="desabilitarEdicao" :rules="usernameRules"></v-text-field>
+
+            <v-select
+              label="Tipo de usuário"
+              :items="['ADMIN', 'USUARIO']"
+              variant="outlined"
+              v-model="usuarioEmEdicao.tipo"
+            ></v-select>
+
+            <v-text-field v-model="usuarioEmEdicao.username" label="Nome de usuario" variant="outlined" :clearable="!desabilitarEdicao" :readonly="desabilitarEdicao" :rules="usernameRules"></v-text-field>
 
             <v-text-field
               label="Senha"

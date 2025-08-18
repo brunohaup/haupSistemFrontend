@@ -11,7 +11,7 @@
       <v-list>
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-          :title="usuarioLogado"
+          :title="usuarioLogado.nome"
           @click.stop="rail = !rail"
         >
           <template v-slot:append>
@@ -49,6 +49,7 @@
         <v-list-item
           prepend-icon="mdi-logout"
           title="Sair"
+          to="/"
           @click="logout"
         />
       </v-list>
@@ -68,16 +69,14 @@ import { useRouter } from 'vue-router'
 const drawer = ref(true)
 const rail = ref(false)
 const router = useRouter()
-const usuarioLogado = ref('');
+const usuarioLogado = ref({});
 
 onMounted(() => {
   const token = localStorage.getItem('token');
   if (token) {
     const dados = decodeToken(token);
     console.log("aaa", dados);
-    usuarioLogado.value = dados.sub || 'Usuário';
-    console.log(usuarioLogado.value);
-    
+    usuarioLogado.value = dados;
   }
 });
 
@@ -94,6 +93,7 @@ function decodeToken(token) {
 
 function logout() {
   localStorage.removeItem('token')
-  router.push('/login')
+  router.push('/')
+  window.reload;
 }
 </script>

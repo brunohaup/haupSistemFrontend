@@ -1,24 +1,26 @@
 <template>
   <v-container>
-    <v-btn color="primary" @click="novaCompra">Nova Compra</v-btn>
+    <v-btn class="btnPrimary" @click="novaCompra">Nova Compra</v-btn>
     <v-table>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Fornecedor</th>
-          <th>Data</th>
-          <th>Valor Total</th>
+          <th>Etapa</th>
+          <th>Descrição</th>
+          <th>Data inclusão</th>
+          <th>Solicitante</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="compra in compras" :key="compra.id">
           <td>{{ compra.id }}</td>
-          <td>{{ compra.fornecedor }}</td>
-          <td>{{ compra.data }}</td>
-          <td>{{ compra.valor }}</td>
+          <td>{{ compra.etapa }}</td>
+          <td>{{ compra.descricao }}</td>
+          <td>{{ converterTimestampParaData(compra.dataHoraInclusao) }}</td>
+          <td>{{ compra.solicitante.nome }}</td>
           <td>
-            <v-btn icon="mdi-pencil" @click="editarCompra(compra.id)"></v-btn>
+            
           </td>
         </tr>
       </tbody>
@@ -36,6 +38,11 @@ const compras = ref([]);
 
 function novaCompra() {
   router.push({ name: 'NovaCompra' });
+}
+
+function converterTimestampParaData(timestamp) {
+  const data = new Date(timestamp);
+  return data.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 }
 
 function editarCompra(id) {

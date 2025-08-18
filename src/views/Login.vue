@@ -1,8 +1,7 @@
 <script setup>
 import api from '../services/baseApi.js';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-
 const router = useRouter();
 
 const username = ref(null);
@@ -19,6 +18,41 @@ const passwordRules = [
   v => v.length >= 6 || 'A senha deve ter pelo menos 6 caracteres'
 ];
 
+
+
+function isTokenValid() {
+  const token = localStorage.getItem('token');
+  if (!token) return false;
+  try {
+    const dados = decodeToken(token);
+    return Date.now() < dados.exp * 1000; // exp é em segundos
+  } catch {
+    return false;
+  }
+}
+
+function decodeToken(token) {
+  try {
+    const payloadBase64 = token.split('.')[1];
+    const payloadDecoded = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
+    console.log(payloadDecoded);
+    
+    return JSON.parse(payloadDecoded);
+  } catch (e) {
+    console.error("Token inválido", e);
+    return null;
+  }
+}
+
+
+onMounted(() => {
+  if(!isTokenValid()){
+    //localStorage.removeItem('token');
+  }else{
+    router.push('/home');
+  }
+});
+
 async function login() {
   loading.value = true
   const valid = await loginFormRef.value.validate();
@@ -28,7 +62,9 @@ async function login() {
         password: password.value
     });
     if(response.status === 200){
-      localStorage.setItem('token', response.headers.authorization);
+      
+      const token = response.headers.authorization.split(" ");
+      localStorage.setItem('token', token[1]);
       router.push('/home');
     }
     

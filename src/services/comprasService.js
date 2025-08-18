@@ -2,11 +2,13 @@ import api from './baseApi.js';
 
 
 export default {
-  async listarCompras() {
-    const response = await api.get('/compras');
+  async criarCompra(compra) {
+    const response = await api.post("/compra", compra);
     return response.data;
   },
-  async criarCompra(compra) {
-    return api.post('/compras', compra);
+
+  async listarCompras() {
+    const response = await api.get("/compra");
+    return response.data;
   }
 };
