@@ -35,7 +35,6 @@ function decodeToken(token) {
   try {
     const payloadBase64 = token.split('.')[1];
     const payloadDecoded = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
-    console.log(payloadDecoded);
     
     return JSON.parse(payloadDecoded);
   } catch (e) {

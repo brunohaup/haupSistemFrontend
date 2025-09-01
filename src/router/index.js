@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Login from '../views/Login.vue'
+import Login from '../views/Login.vue';
 import DefaultLayout from '../layouts/DefaultLayout.vue'
 import ComprasList from '../views/compras/ComprasList.vue';
-import ComprasForm from '../views/compras/ComprasForm.vue';
 import Home from '../views/Home.vue';
 import UsuariosList from '../views/usuarios/UsuariosList.vue';
+import CompraDetail from '../views/compras/CompraDetail.vue';
+import CompraEdit from '../views/compras/CompraEdit.vue';
 
 const routes = [
   {
@@ -18,8 +19,10 @@ const routes = [
     children: [
       { path: 'home', name: 'Home', component: Home },
       { path: 'usuarios', name: 'Usuarios', component: UsuariosList },
-      { path: 'compras', name: 'Compras', component: ComprasList },
-      { path: 'compras/nova', name: 'NovaCompra', component: ComprasForm }
+      { path: 'compra', name: 'Compras', component: ComprasList },
+      { path: 'compra/nova', name: 'NovaCompra', component: CompraEdit },
+      { path: 'compra/detalhe', name: 'DetalheCompra', component: CompraDetail },
+      { path: 'compra/editar', name: 'EdicaoCompra', component: CompraEdit },
     ]
   }
 ]

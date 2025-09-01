@@ -1,3 +1,38 @@
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const drawer = ref(true)
+const rail = ref(false)
+const router = useRouter()
+const usuarioLogado = ref({});
+
+onMounted(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    const dados = decodeToken(token);
+    usuarioLogado.value = dados;
+  }
+});
+
+function decodeToken(token) {
+  try {
+    const payloadBase64 = token.split('.')[1];
+    const payloadDecoded = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(payloadDecoded);
+  } catch (e) {
+    console.error("Token inválido", e);
+    return null;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('token')
+  router.push('/')
+  window.reload;
+}
+</script>
+
 <template>
   <v-layout>
     <!-- Menu lateral -->
@@ -10,8 +45,8 @@
       <!-- Cabeçalho do menu -->
       <v-list>
         <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-          :title="usuarioLogado.nome"
+          prepend-icon="mdi-account-circle"
+          :title="usuarioLogado.sub"
           @click.stop="rail = !rail"
         >
           <template v-slot:append>
@@ -37,7 +72,7 @@
         <v-list-item
           prepend-icon="mdi-cart-outline"
           title="Compras"
-          to="/compras"
+          to="/compra"
           link
         />
         <v-list-item
@@ -61,39 +96,3 @@
     </v-main>
   </v-layout>
 </template>
-
-<script setup>
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-
-const drawer = ref(true)
-const rail = ref(false)
-const router = useRouter()
-const usuarioLogado = ref({});
-
-onMounted(() => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    const dados = decodeToken(token);
-    console.log("aaa", dados);
-    usuarioLogado.value = dados;
-  }
-});
-
-function decodeToken(token) {
-  try {
-    const payloadBase64 = token.split('.')[1];
-    const payloadDecoded = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
-    return JSON.parse(payloadDecoded);
-  } catch (e) {
-    console.error("Token inválido", e);
-    return null;
-  }
-}
-
-function logout() {
-  localStorage.removeItem('token')
-  router.push('/')
-  window.reload;
-}
-</script>

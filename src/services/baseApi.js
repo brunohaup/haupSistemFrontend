@@ -20,7 +20,6 @@ baseApi.interceptors.request.use((config) => {
 baseApi.interceptors.response.use(
   (response) => response, // se sucesso, só retorna
   (error) => {
-    console.log(error.response);
     
     if (error.response && error.response.status === 401) {
       // Remove token inválido

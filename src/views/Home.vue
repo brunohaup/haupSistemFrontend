@@ -1,11 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-
-const arrayTarefas = ref([
-  {titulo: 'Modulo de usuários', texto: 'Implementar sistema de permissões'},
-  {titulo: 'Modulo de compras', texto: 'Implementar tudo do zero'},
-  {titulo: 'backend', texto:'metodo authenticated() do UsuarioService com erro: Cannot invoke "com.haupsystem.security.UserSpringSecurity.getId()" because "usuarioLogado" is null'},
-]);
 
 function tempoRestanteToken() {
   const token = localStorage.getItem('token');
@@ -38,17 +31,7 @@ function decodeToken(token) {
 </script>
 
 <template>
+
+  <h3>Home</h3>
   Tempo da sessao: {{ tempoRestanteToken() }}
-  <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 10px;">
-    <v-card v-for="tarefa in arrayTarefas" max-width="344" hover style="margin: 10px;">
-      <v-card-item>
-        <v-card-title>
-          {{ tarefa.titulo }}
-        </v-card-title>
-      </v-card-item>
-      <v-card-text>
-        {{ tarefa.texto }}
-      </v-card-text>
-    </v-card>
-  </div>
 </template>
