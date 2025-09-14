@@ -10,7 +10,7 @@ function tempoRestanteToken() {
     if (!decoded.exp) return 0;
     const agora = Date.now() / 1000; // em segundos
     const tempoRestante = decoded.exp - agora;
-    return tempoRestante > 0 ? tempoRestante : 0; // se já expirou, retorna 0
+    return tempoRestante > 0 ? tempoRestante : 0;
   } catch (error) {
     console.error('Token inválido:', error);
     return 0;

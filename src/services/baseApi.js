@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseApi = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://haupsistem.onrender.com',
 });
 
 // Interceptor para adicionar o token a cada requisição

@@ -167,6 +167,7 @@ function getEtapaStyle(etapa) {
 
       <template v-slot:item.actions="{ item }">
         <v-btn
+          v-if="item.etapa !== 'FINALIZADA' && item.etapa !== 'RECUSADA'"
           icon="mdi-pencil"
           size="small"
           variant="text"

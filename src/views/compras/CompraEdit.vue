@@ -5,6 +5,7 @@ import comprasService from '../../services/comprasService'
 import Criacao from './etapas/Criacao.vue'
 import Orcamento from './etapas/Orcamento.vue'
 import Aprovacao from './etapas/Aprovacao.vue'
+import Aprovada from './etapas/Aprovada.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -15,6 +16,8 @@ const compraEmEdicao = ref(true)
 const criacaoRef = ref(null)
 const orcamentoRef = ref(null)
 const aprovacaoRef = ref(null)
+const aprovadaRef = ref(null)
+const recusadaRef = ref(null)
 
 function cancelar() {
   router.push({ name: 'Compras' })
@@ -66,6 +69,24 @@ async function validarEtapaAtual() {
         return await aprovacaoRef.value.validaDados()
       }
       break
+
+    case 'APROVADA':
+      if (aprovadaRef.value && typeof aprovadaRef.value.validaDados === 'function') {
+        return await aprovadaRef.value.validaDados()
+      }
+      break
+
+     case 'APROVADA_PARCIAL':
+      if (aprovadaRef.value && typeof aprovadaRef.value.validaDados === 'function') {
+        return await aprovadaRef.value.validaDados()
+      }
+      break
+
+    case 'RECUSADA':
+      if (recusadaRef.value && typeof recusadaRef.value.validaDados === 'function') {
+        return await recusadaRef.value.validaDados()
+      }
+      break
     
     default:
       return { valido: true }
@@ -93,6 +114,24 @@ async function retornaDto() {
     case 'AGUARDANDO_APROVACAO':
       if (aprovacaoRef.value && typeof aprovacaoRef.value.montaDtoRetorno === 'function') {
         return await aprovacaoRef.value.montaDtoRetorno();
+      }
+      break
+
+    case 'APROVADA':
+      if (aprovadaRef.value && typeof aprovadaRef.value.montaDtoRetorno === 'function') {
+        return await aprovadaRef.value.montaDtoRetorno()
+      }
+      break
+
+     case 'APROVADA_PARCIAL':
+      if (aprovadaRef.value && typeof aprovadaRef.value.montaDtoRetorno === 'function') {
+        return await aprovadaRef.value.montaDtoRetorno()
+      }
+      break
+
+    case 'RECUSADA':
+      if (recusadaRef.value && typeof recusadaRef.value.montaDtoRetorno === 'function') {
+        return await recusadaRef.value.montaDtoRetorno()
       }
       break
     
@@ -147,8 +186,13 @@ watch(() => route.query.id, async (newId, oldId) => {
       <div v-if="compra.etapa === 'AGUARDANDO_APROVACAO'" style="margin-top: 20px;">
         <Aprovacao ref="aprovacaoRef" :compra="compra" />
       </div>
-      <div v-if="!['CRIACAO', 'ORCAMENTO', 'AGUARDANDO_APROVACAO'].includes(compra.etapa)" style="margin-top: 20px;">
-        <p>Funcionalidade para etapa {{ compra.etapa }} em desenvolvimento...</p>
+
+      <div v-if="compra.etapa === 'APROVADA' || compra.etapa === 'APROVADA_PARCIAL'" style="margin-top: 20px;">
+        <Aprovada ref="aprovadaRef" :compra="compra" />
+      </div>
+
+      <div v-if="compra.etapa === 'RECUSADA'" style="margin-top: 20px;">
+        
       </div>
 
       <div style="display: flex; margin-top: 30px; justify-content: center; gap: 10px;">
